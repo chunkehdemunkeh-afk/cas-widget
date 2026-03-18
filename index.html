@@ -149,6 +149,53 @@
       border: 1px solid #333333;
     }
 
+    /* Upcoming fixtures */
+    .cas-upcoming-header {
+      padding: 10px 20px 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ff8000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #333333;
+      margin-top: 4px;
+    }
+    .cas-upcoming-match {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-bottom: 1px solid #1e1e1e;
+      gap: 10px;
+    }
+    .cas-upcoming-match:last-child { border-bottom: none; }
+    .cas-upcoming-match:hover { background: #1a1a1a; }
+    .cas-upcoming-teams {
+      font-size: 0.85rem;
+      color: #dddddd;
+      font-weight: 600;
+      flex: 1;
+    }
+    .cas-upcoming-vs {
+      color: #555;
+      font-weight: 400;
+      margin: 0 4px;
+    }
+    .cas-upcoming-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .cas-upcoming-time {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ff8000;
+    }
+    .cas-upcoming-date {
+      font-size: 0.7rem;
+      color: #888888;
+      margin-top: 2px;
+    }
+
     @media (max-width: 400px) {
       .cas-team-name { font-size: 0.82rem; }
       .cas-score-home, .cas-score-away { font-size: 1.4rem; }
@@ -201,24 +248,57 @@
       window.parent.postMessage({ type: 'cas-resize', height: h }, '*');
     }
 
+    function formatKickoff(iso) {
+      if (!iso) return { date: 'TBC', time: '' };
+      const d = new Date(iso);
+      const date = d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
+      const time = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+      return { date, time };
+    }
+
+    function renderUpcoming(fixture) {
+      const { date, time } = formatKickoff(fixture.kickoff);
+      return `
+        <div class="cas-upcoming-match">
+          <div class="cas-upcoming-teams">
+            ${fixture.home_team}<span class="cas-upcoming-vs">vs</span>${fixture.away_team}
+          </div>
+          <div class="cas-upcoming-meta">
+            <div class="cas-upcoming-time">${time || 'TBC'}</div>
+            <div class="cas-upcoming-date">${date}</div>
+          </div>
+        </div>`;
+    }
+
     function render(data) {
       const el = document.getElementById("cas-livescore");
       if (!el) return;
-      if (!data || !data.matches || !data.matches.length) {
+
+      const hasMatches  = data && data.matches  && data.matches.length;
+      const hasUpcoming = data && data.upcoming && data.upcoming.length;
+
+      if (!hasMatches && !hasUpcoming) {
         el.innerHTML = '<div class="cas-empty">Check back on match days for live scores!</div>';
         postHeight();
         return;
       }
+
       const updated = data.last_updated
         ? new Date(data.last_updated).toLocaleTimeString("en-GB", { hour:"2-digit", minute:"2-digit" })
         : "";
+
+      const upcomingHTML = hasUpcoming ? `
+        <div class="cas-upcoming-header">Upcoming Fixtures</div>
+        ${data.upcoming.map(renderUpcoming).join("")}` : "";
+
       el.innerHTML = `
         <div class="cas-widget">
           <div class="cas-widget-header">
-            <span class="cas-widget-title">⚽ Cardiff All Stars — Live Scores</span>
+            <span class="cas-widget-title">⚽ Cardiff All Stars — Scores &amp; Fixtures</span>
             ${updated ? `<span class="cas-updated">Updated: ${updated}</span>` : ""}
           </div>
-          ${data.matches.map(renderMatch).join("")}
+          ${hasMatches ? data.matches.map(renderMatch).join("") : ""}
+          ${upcomingHTML}
         </div>`;
       postHeight();
     }
