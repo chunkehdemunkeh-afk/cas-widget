@@ -4,155 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cardiff All Stars FC — Live Scores</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+body {
+  margin: 0;
+  background: transparent;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
 
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: transparent;
-      padding: 8px;
-    }
+/* Widget styles */
+.cas-widget {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #2b1e0f; /* dark background for orange theme */
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
 
-    .cas-widget {
-      border-radius: 12px;
-      overflow: hidden;
-      background: #0a1628;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-    }
+.cas-widget-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #2b1e0f;
+  border-bottom: 2px solid #ff9c3b;
+}
 
-    .cas-widget-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      background: #102040;
-      border-bottom: 2px solid #1e3a5f;
-    }
+.cas-widget-title { font-size: 1rem; font-weight: 700; color: #ff9c3b; text-transform: uppercase; }
+.cas-updated { font-size: 0.75rem; color: #ffb87a; }
 
-    .cas-widget-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
+.cas-league-group { margin: 10px 0; }
+.cas-league-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffa347;
+  padding: 6px 20px;
+  text-transform: uppercase;
+  background: #2b1e0f;
+}
 
-    .cas-updated {
-      font-size: 0.75rem;
-      color: #7a9bbf;
-    }
+.cas-match {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #3a2715;
+  transition: background 0.2s;
+}
 
-    .cas-match {
-      border-bottom: 1px solid #1a2f4a;
-      padding: 16px 20px;
-    }
-    .cas-match:last-child { border-bottom: none; }
+.cas-match:hover { background: #3a2715; }
+.cas-team { display: flex; align-items: center; }
+.cas-team-name { font-weight: 700; color: #ffd9b3; }
+.cas-score { font-size: 1.5rem; font-weight: bold; color: #fff; min-width: 80px; text-align: center; }
 
-    .cas-match-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+.cas-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; }
+.cas-badge.cas-live { background: rgba(255,156,59,0.15); color: #ff9c3b; border: 1px solid #ff9c3400; }
+.cas-badge.cas-ft { background: rgba(255,180,100,0.1); color: #ffb84d; border: 1px solid #ffb84d40; }
+.cas-badge.cas-pre { background: rgba(255,200,120,0.1); color: #ffc878; border: 1px solid #ffc87840; }
 
-    .cas-league {
-      font-size: 0.7rem;
-      color: #7a9bbf;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+.cas-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff9c3b;
+  animation: cas-pulse 1.4s ease-in-out infinite;
+}
 
-    .cas-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .cas-badge.cas-live { background: rgba(220,40,40,0.15); color: #ff5555; border: 1px solid #ff555540; }
-    .cas-badge.cas-ft   { background: rgba(40,180,100,0.1);  color: #50d090; border: 1px solid #50d09040; }
-    .cas-badge.cas-pre  { background: rgba(100,140,200,0.1); color: #88aadd; border: 1px solid #88aadd40; }
+@keyframes cas-pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
 
-    .cas-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #ff5555;
-      animation: cas-pulse 1.4s ease-in-out infinite;
-    }
-    @keyframes cas-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
+.cas-empty { padding: 28px; text-align: center; color: #ffb87a; font-size: 0.9rem; }
 
-    .cas-scoreline {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .cas-team {
-      flex: 1;
-    }
-    .cas-team-home { text-align: right; }
-    .cas-team-away { text-align: left; }
-
-    .cas-team-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #e8eef5;
-      line-height: 1.2;
-    }
-
-    .cas-score {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-      background: #102040;
-      border-radius: 8px;
-      padding: 8px 16px;
-      border: 2px solid #1e3a5f;
-      min-width: 90px;
-      justify-content: center;
-    }
-    .cas-live .cas-score {
-      border-color: rgba(255,85,85,0.4);
-      background: rgba(255,85,85,0.06);
-    }
-
-    .cas-score-home,
-    .cas-score-away {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1;
-    }
-    .cas-score-sep {
-      font-size: 1.4rem;
-      color: #3a6080;
-    }
-
-    .cas-empty {
-      padding: 28px;
-      text-align: center;
-      color: #4a6a88;
-      font-size: 0.9rem;
-      background: #0a1628;
-      border-radius: 12px;
-    }
-
-    @media (max-width: 400px) {
-      .cas-team-name { font-size: 0.82rem; }
-      .cas-score-home, .cas-score-away { font-size: 1.4rem; }
-      .cas-score { padding: 6px 10px; min-width: 72px; }
-      .cas-match { padding: 12px 14px; }
-    }
-  </style>
+@media (max-width: 520px) {
+  .cas-score { font-size: 1.2rem; min-width: 60px; }
+  .cas-team-name { font-size: 0.82rem; }
+}
+</style>
 </head>
 <body>
   <div id="cas-livescore"></div>
