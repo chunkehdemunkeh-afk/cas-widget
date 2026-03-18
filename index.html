@@ -11,6 +11,7 @@
       font-family: 'Segoe UI', Arial, sans-serif;
       background: #000000;
       padding: 8px;
+      overflow: hidden;
     }
 
     .cas-widget {
@@ -195,11 +196,17 @@
         </div>`;
     }
 
+    function postHeight() {
+      const h = document.body.scrollHeight;
+      window.parent.postMessage({ type: 'cas-resize', height: h }, '*');
+    }
+
     function render(data) {
       const el = document.getElementById("cas-livescore");
       if (!el) return;
       if (!data || !data.matches || !data.matches.length) {
         el.innerHTML = '<div class="cas-empty">Check back on match days for live scores!</div>';
+        postHeight();
         return;
       }
       const updated = data.last_updated
@@ -213,6 +220,7 @@
           </div>
           ${data.matches.map(renderMatch).join("")}
         </div>`;
+      postHeight();
     }
 
     async function fetchScores() {
