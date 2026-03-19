@@ -38,9 +38,19 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .cas-updated {
-      font-size: 0.75rem;
-      color: #cc6600;
+    .cas-updated { font-size: 0.75rem; color: #cc6600; }
+
+    /* ── Section headers ── */
+    .cas-section-header {
+      padding: 10px 20px 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ff8000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #333333;
+      margin-top: 4px;
+      background: #0a0a0a;
     }
 
     /* ── Live match cards ── */
@@ -50,19 +60,13 @@
     }
     .cas-match:last-child { border-bottom: none; }
     .cas-match:hover { background: #1a1a1a; }
-
     .cas-match-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
     }
-    .cas-league {
-      font-size: 0.7rem;
-      color: #cc6600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    .cas-league { font-size: 0.7rem; color: #cc6600; text-transform: uppercase; letter-spacing: 0.05em; }
     .cas-badge {
       display: inline-flex;
       align-items: center;
@@ -77,127 +81,79 @@
     .cas-badge.cas-live { background: rgba(255,128,0,0.15); color: #ff8000; border: 1px solid #ff800050; }
     .cas-badge.cas-ft   { background: rgba(255,255,255,0.07); color: #aaaaaa; border: 1px solid #44444460; }
     .cas-badge.cas-pre  { background: rgba(255,128,0,0.08); color: #cc6600; border: 1px solid #cc660040; }
-
     .cas-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #ff8000;
+      display: inline-block; width: 7px; height: 7px;
+      border-radius: 50%; background: #ff8000;
       animation: cas-pulse 1.4s ease-in-out infinite;
     }
     @keyframes cas-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.4; transform: scale(0.7); }
     }
-
-    .cas-scoreline {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .cas-scoreline { display: flex; align-items: center; gap: 16px; }
     .cas-team { flex: 1; }
     .cas-team-home { text-align: right; }
     .cas-team-away { text-align: left; }
-    .cas-team-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.2;
-    }
+    .cas-team-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; line-height: 1.2; }
     .cas-score {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-      background: #000000;
-      border-radius: 8px;
-      padding: 8px 16px;
-      border: 2px solid #ff8000;
-      min-width: 90px;
-      justify-content: center;
+      display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+      background: #000000; border-radius: 8px; padding: 8px 16px;
+      border: 2px solid #ff8000; min-width: 90px; justify-content: center;
     }
     .cas-live .cas-score { box-shadow: 0 0 12px rgba(255,128,0,0.3); }
-    .cas-score-home,
-    .cas-score-away {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #ff8000;
-      line-height: 1;
-    }
+    .cas-score-home, .cas-score-away { font-size: 1.8rem; font-weight: 800; color: #ff8000; line-height: 1; }
     .cas-score-sep { font-size: 1.4rem; color: #555555; }
-
     .cas-scorers {
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: #cc6600;
-      padding: 0 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 12px;
+      margin-top: 8px; font-size: 0.75rem; color: #cc6600;
+      padding: 0 4px; display: flex; flex-wrap: wrap; gap: 4px 12px;
     }
     .cas-scorer-item::before { content: "⚽ "; }
 
     /* ── Upcoming fixtures ── */
-    .cas-upcoming-header {
-      padding: 10px 20px 6px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #ff8000;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-top: 1px solid #333333;
-      margin-top: 4px;
-    }
     .cas-upcoming-match {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      border-bottom: 1px solid #1e1e1e;
-      gap: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; border-bottom: 1px solid #1e1e1e; gap: 10px;
     }
     .cas-upcoming-match:last-child { border-bottom: none; }
     .cas-upcoming-match:hover { background: #1a1a1a; }
     .cas-upcoming-tbd-row { opacity: 0.5; }
-
     .cas-upcoming-left { flex: 1; min-width: 0; }
     .cas-upcoming-label {
-      font-size: 0.63rem;
-      font-weight: 700;
-      color: #ff8000;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 2px;
+      font-size: 0.63rem; font-weight: 700; color: #ff8000;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px;
     }
-    .cas-upcoming-teams {
-      font-size: 0.83rem;
-      color: #dddddd;
-      font-weight: 600;
-    }
+    .cas-upcoming-teams { font-size: 0.83rem; color: #dddddd; font-weight: 600; }
     .cas-upcoming-tbd-text { color: #555555; font-style: italic; font-weight: 400; }
     .cas-upcoming-vs { color: #555; font-weight: 400; margin: 0 4px; }
-
+    .cas-upcoming-venue { font-size: 0.68rem; color: #666666; margin-top: 2px; }
     .cas-upcoming-meta { text-align: right; flex-shrink: 0; }
-    .cas-upcoming-time {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ff8000;
+    .cas-upcoming-time { font-size: 0.85rem; font-weight: 700; color: #ff8000; }
+    .cas-upcoming-date { font-size: 0.7rem; color: #888888; margin-top: 2px; }
+
+    /* ── Results ── */
+    .cas-result-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; border-bottom: 1px solid #1e1e1e; gap: 10px;
     }
-    .cas-upcoming-date {
-      font-size: 0.7rem;
-      color: #888888;
-      margin-top: 2px;
+    .cas-result-row:last-child { border-bottom: none; }
+    .cas-result-row:hover { background: #1a1a1a; }
+    .cas-result-empty { opacity: 0.5; }
+    .cas-result-left { flex: 1; min-width: 0; }
+    .cas-result-label {
+      font-size: 0.63rem; font-weight: 700; color: #ff8000;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px;
     }
+    .cas-result-teams { font-size: 0.83rem; color: #dddddd; font-weight: 600; }
+    .cas-result-vs { color: #555; font-weight: 400; margin: 0 4px; }
+    .cas-result-venue { font-size: 0.68rem; color: #666666; margin-top: 2px; }
+    .cas-result-meta { text-align: right; flex-shrink: 0; }
+    .cas-result-score { font-size: 0.95rem; font-weight: 800; color: #ff8000; }
+    .cas-result-date { font-size: 0.7rem; color: #888888; margin-top: 2px; }
 
     /* ── Empty state ── */
     .cas-empty {
-      padding: 28px;
-      text-align: center;
-      color: #cc6600;
-      font-size: 0.9rem;
-      background: #111111;
-      border-radius: 10px;
-      border: 1px solid #333333;
+      padding: 28px; text-align: center; color: #cc6600; font-size: 0.9rem;
+      background: #111111; border-radius: 10px; border: 1px solid #333333;
     }
 
     @media (max-width: 400px) {
@@ -205,7 +161,7 @@
       .cas-score-home, .cas-score-away { font-size: 1.4rem; }
       .cas-score { padding: 6px 10px; min-width: 72px; }
       .cas-match { padding: 12px 14px; }
-      .cas-upcoming-match { padding: 8px 14px; }
+      .cas-upcoming-match, .cas-result-row { padding: 8px 14px; }
     }
   </style>
 </head>
@@ -213,7 +169,6 @@
   <div id="cas-livescore"></div>
 
   <script>
-    // ⬇️ Replace with your Gist raw URL (no commit hash)
     const GIST_URL = "https://gist.githubusercontent.com/chunkehdemunkeh-afk/250ca7f539145a1ae3deae88cb5f360e/raw/scores.json";
     const POLL_MS  = 60000;
 
@@ -233,33 +188,26 @@
         <div class="cas-match ${sc}">
           <div class="cas-match-header">
             <span class="cas-league">${match.league || ""}</span>
-            <span class="cas-badge ${sc}">
-              ${isLive ? '<span class="cas-dot"></span>' : ""}${sl}
-            </span>
+            <span class="cas-badge ${sc}">${isLive ? '<span class="cas-dot"></span>' : ""}${sl}</span>
           </div>
           <div class="cas-scoreline">
-            <div class="cas-team cas-team-home">
-              <span class="cas-team-name">${match.home_team}</span>
-            </div>
+            <div class="cas-team cas-team-home"><span class="cas-team-name">${match.home_team}</span></div>
             <div class="cas-score">
               <span class="cas-score-home">${match.home_score}</span>
               <span class="cas-score-sep">:</span>
               <span class="cas-score-away">${match.away_score}</span>
             </div>
-            <div class="cas-team cas-team-away">
-              <span class="cas-team-name">${match.away_team}</span>
-            </div>
+            <div class="cas-team cas-team-away"><span class="cas-team-name">${match.away_team}</span></div>
           </div>
           ${scorersHTML}
         </div>`;
     }
 
-
     function postHeight() {
       window.parent.postMessage({ type: 'cas-resize', height: document.body.scrollHeight }, '*');
     }
 
-    function formatKickoff(iso) {
+    function formatDate(iso) {
       if (!iso) return { date: '', time: '' };
       const d    = new Date(iso);
       const date = d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
@@ -268,10 +216,12 @@
     }
 
     function renderUpcoming(fixture) {
-      const isTBD    = !fixture.kickoff;
-      const { date, time } = formatKickoff(fixture.kickoff);
-      const label    = fixture.cas_team || '';
-      const teamsHTML = isTBD
+      const isTBD = !fixture.kickoff;
+      const { date, time } = formatDate(fixture.kickoff);
+      const label = fixture.cas_team || '';
+      const venue = fixture.venue || '';
+      const isNoFixture = fixture.home_team === 'No fixture scheduled';
+      const teamsHTML = isNoFixture
         ? `<span class="cas-upcoming-tbd-text">No fixture scheduled</span>`
         : `${fixture.home_team}<span class="cas-upcoming-vs">vs</span>${fixture.away_team}`;
       return `
@@ -279,10 +229,36 @@
           <div class="cas-upcoming-left">
             ${label ? `<div class="cas-upcoming-label">${label}</div>` : ''}
             <div class="cas-upcoming-teams">${teamsHTML}</div>
+            ${venue && !isNoFixture ? `<div class="cas-upcoming-venue">📍 ${venue}</div>` : ''}
           </div>
           <div class="cas-upcoming-meta">
             <div class="cas-upcoming-time">${isTBD ? '—' : (time || 'TBD')}</div>
             <div class="cas-upcoming-date">${date}</div>
+          </div>
+        </div>`;
+    }
+
+    function renderResult(res) {
+      const noResult = !res.played_at || res.home_team === 'No result yet';
+      const { date } = formatDate(res.played_at);
+      const label = res.cas_team || '';
+      const venue = res.venue || '';
+      const scoreHTML = noResult
+        ? `<div class="cas-result-score" style="color:#555">—</div>`
+        : `<div class="cas-result-score">${res.home_score} – ${res.away_score}</div>`;
+      const teamsHTML = noResult
+        ? `<span class="cas-upcoming-tbd-text">No result yet</span>`
+        : `${res.home_team}<span class="cas-result-vs">vs</span>${res.away_team}`;
+      return `
+        <div class="cas-result-row${noResult ? ' cas-result-empty' : ''}">
+          <div class="cas-result-left">
+            ${label ? `<div class="cas-result-label">${label}</div>` : ''}
+            <div class="cas-result-teams">${teamsHTML}</div>
+            ${venue && !noResult ? `<div class="cas-result-venue">📍 ${venue}</div>` : ''}
+          </div>
+          <div class="cas-result-meta">
+            ${scoreHTML}
+            <div class="cas-result-date">${date}</div>
           </div>
         </div>`;
     }
@@ -292,9 +268,10 @@
       if (!el) return;
 
       const hasMatches  = data && data.matches  && data.matches.length;
-      const hasUpcoming = data && data.upcoming && data.upcoming.length;
+      const hasUpcoming = data && data.upcoming  && data.upcoming.length;
+      const hasResults  = data && data.results   && data.results.length;
 
-      if (!hasMatches && !hasUpcoming) {
+      if (!hasMatches && !hasUpcoming && !hasResults) {
         el.innerHTML = '<div class="cas-empty">Check back on match days for live scores!</div>';
         postHeight();
         return;
@@ -305,8 +282,12 @@
         : "";
 
       const upcomingHTML = hasUpcoming ? `
-        <div class="cas-upcoming-header">Upcoming Fixtures</div>
+        <div class="cas-section-header">Upcoming Fixtures</div>
         ${data.upcoming.map(renderUpcoming).join("")}` : "";
+
+      const resultsHTML = hasResults ? `
+        <div class="cas-section-header">Recent Results</div>
+        ${data.results.map(renderResult).join("")}` : "";
 
       el.innerHTML = `
         <div class="cas-widget">
@@ -314,8 +295,9 @@
             <span class="cas-widget-title">⚽ Cardiff All Stars — Scores &amp; Fixtures</span>
             ${updated ? `<span class="cas-updated">Updated: ${updated}</span>` : ""}
           </div>
-          ${hasMatches ? data.matches.map(renderMatch).join("") : ""}
+          ${hasMatches ? `<div class="cas-section-header" style="border-top:none">Live Now</div>${data.matches.map(renderMatch).join("")}` : ""}
           ${upcomingHTML}
+          ${resultsHTML}
         </div>`;
       postHeight();
     }
