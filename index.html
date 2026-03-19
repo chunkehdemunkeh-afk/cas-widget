@@ -211,8 +211,10 @@
 
     function renderMatch(match) {
       const sc     = STATUS_CLASSES[match.status] || "cas-ft";
-      const sl     = STATUS_LABELS[match.status]  || match.status;
       const isLive = match.status === "LIVE";
+      const sl     = isLive && match.match_time
+                       ? match.match_time
+                       : (STATUS_LABELS[match.status] || match.status);
       return `
         <div class="cas-match ${sc}">
           <div class="cas-match-header">
@@ -237,6 +239,7 @@
         </div>`;
     }
 
+
     function postHeight() {
       window.parent.postMessage({ type: 'cas-resize', height: document.body.scrollHeight }, '*');
     }
@@ -254,7 +257,7 @@
       const { date, time } = formatKickoff(fixture.kickoff);
       const label    = fixture.cas_team || '';
       const teamsHTML = isTBD
-        ? `<span class="cas-upcoming-tbd-text">Next fixture TBD</span>`
+        ? `<span class="cas-upcoming-tbd-text">No fixture scheduled</span>`
         : `${fixture.home_team}<span class="cas-upcoming-vs">vs</span>${fixture.away_team}`;
       return `
         <div class="cas-upcoming-match${isTBD ? ' cas-upcoming-tbd-row' : ''}">
