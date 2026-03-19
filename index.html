@@ -126,6 +126,17 @@
     }
     .cas-score-sep { font-size: 1.4rem; color: #555555; }
 
+    .cas-scorers {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: #cc6600;
+      padding: 0 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+    .cas-scorer-item::before { content: "⚽ "; }
+
     /* ── Upcoming fixtures ── */
     .cas-upcoming-header {
       padding: 10px 20px 6px;
@@ -215,6 +226,9 @@
       const sl     = isLive && match.match_time
                        ? match.match_time
                        : (STATUS_LABELS[match.status] || match.status);
+      const scorersHTML = match.scorers && match.scorers.length
+        ? `<div class="cas-scorers">${match.scorers.map(s => `<span class="cas-scorer-item">${s}</span>`).join("")}</div>`
+        : "";
       return `
         <div class="cas-match ${sc}">
           <div class="cas-match-header">
@@ -236,6 +250,7 @@
               <span class="cas-team-name">${match.away_team}</span>
             </div>
           </div>
+          ${scorersHTML}
         </div>`;
     }
 
