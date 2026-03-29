@@ -178,13 +178,37 @@
     function renderMatch(match) {
       const sc     = STATUS_CLASSES[match.status] || "cas-ft";
       const isLive = match.status === "LIVE";
-      const sl     = isLive && match.match_time
-                       ? match.match_time
-                       : (STATUS_LABELS[match.status] || match.status);
+      let sl = STATUS_LABELS[match.status] || match.status;
+      if (isLive) {
+          if (match.match_time) {
+              sl = match.match_time;
+          } else if (match.phase_1_start) {
+              let diffMins = Math.floor((new Date() - new Date(match.phase_1_start)) / 60000);
+              sl = (45 + diffMins) + "'";
+          } else if (match.phase_0_end) {
+              sl = "HT";
+          } else if (match.phase_0_start) {
+              let diffMins = Math.floor((new Date() - new Date(match.phase_0_start)) / 60000);
+              sl = diffMins + "'";
+          } else if (match.kickoff) {
+              let diffMs = new Date() - new Date(match.kickoff);
+              let diffMins = Math.floor(diffMs / 60000);
+              if (diffMins >= 0 && diffMins <= 45) {
+                  sl = diffMins + "'";
+              } else if (diffMins > 45 && diffMins <= 60) {
+                  sl = "HT";
+              } else if (diffMins > 60 && diffMins <= 105) {
+                  sl = (diffMins - 15) + "'";
+              } else if (diffMins > 105) {
+                  sl = "90+'";
+              }
+          }
+      }
       let scorersHTML = "";
       if (match.scorers && match.scorers.length > 0) {
         let homeScorers = [];
         let awayScorers = [];
+        let cardiffIsHome = match.home_team.toLowerCase().includes("cardiff");
         
         match.scorers.forEach(s => {
             // s is e.g. "45' James Carter (H)"
@@ -193,21 +217,28 @@
             let text = s.replace(" (H)", "").replace(" (A)", "");
             
             // Format to First Initial + Last Name
-            // It could be "45' James Carter", or "James Carter"
-            let clockMatch = text.match(/(\\d{1,3}(?:\\+\\d+)?')/);
+            let clockMatch = text.match(/(\d{1,3}(?:\+\d+)?')/);
             let clock = clockMatch ? clockMatch[1] : "";
-            let nameStr = text.replace(/\\d{1,3}(?:\\+\\d+)?'/, "").trim();
+            let nameStr = text.replace(/\d{1,3}(?:\+\d+)?'/, "").trim();
             
             let parts = nameStr.split(" ");
             let formattedName = nameStr;
             if (parts.length >= 2) {
-                formattedName = parts[0][0] + ". " + parts.slice(1).join(" ");
+                // First initial + very last name (ignoring middle names)
+                formattedName = parts[0][0] + ". " + parts[parts.length - 1];
             }
             let finalStr = clock ? `${clock} ${formattedName}` : formattedName;
             
-            if (isHome) homeScorers.push(finalStr);
-            else if (isAway) awayScorers.push(finalStr);
-            else homeScorers.push(finalStr); // fallback
+            if (isHome) {
+                homeScorers.push(finalStr);
+            } else if (isAway) {
+                awayScorers.push(finalStr);
+            } else {
+                // If the backend didn't specify H/A, assume it's a Cardiff goal
+                // because the scraper currently only extracts Cardiff goals
+                if (cardiffIsHome) homeScorers.push(finalStr);
+                else awayScorers.push(finalStr);
+            }
         });
         
         scorersHTML = `
